@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # outdoors-frontend
 
 > A Vue.js project
@@ -19,3 +20,6 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# outdoors-frontEnd
+>>>>>>> a012a46377e094c0e368362c8e12fd8b71770b49
