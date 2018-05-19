@@ -1,0 +1,38 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import homepage from '@/components/homePage/homepage'
+import login from '@/components/common/login'
+import register from '@/components/common/register'
+import countryPage from "@/components/country/countryPage"
+
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'homepage',
+      component: homepage
+    },
+    {
+      path: '/homepage', redirect: '/'
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register
+    },
+    {
+      path: '/countryPage',
+      name: 'country',
+      component: countryPage,
+      props: true,
+    }
+  ]
+})
