@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-header></my-header>
+    <my-header :logedin="false"></my-header>
     <router-view/>
     <my-fooer></my-fooer>
   </div>

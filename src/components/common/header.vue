@@ -14,7 +14,7 @@
               <a class="nav-link" href="contact.html">联系我们</a>
             </li>
           </ul>
-          <div class="col-6" v-if="logedin">
+          <div class="col-6" v-if="!logedin">
             <a class="btn btn-sm btn-primary" @click="login">登陆</a>
             <a class="btn btn-sm btn-warning" @click="userRegister">注册</a>
           </div>

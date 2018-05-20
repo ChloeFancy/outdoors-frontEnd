@@ -4,9 +4,10 @@ import homepage from '@/components/homePage/homepage'
 import login from '@/components/common/login'
 import register from '@/components/common/register'
 import countryPage from "@/components/country/countryPage"
+import continentPage from "@/components/continent/continentPage"
+import spotPage from "@/components/spot/spotPage"
 
-
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -29,9 +30,21 @@ export default new Router({
       component: register
     },
     {
+      path: '/continentPage',
+      name: 'continent',
+      component: continentPage,
+      props: true,
+    },
+    {
       path: '/countryPage',
       name: 'country',
       component: countryPage,
+      props: true,
+    },
+    {
+      path: '/spotPage',
+      name: 'spot',
+      component: spotPage,
       props: true,
     }
   ]
