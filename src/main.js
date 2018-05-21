@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from "axios";
+import qs from 'qs';
+
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min';
@@ -11,10 +13,10 @@ import vueRouter from "vue-router";
 
 Vue.use(vueRouter);
 Vue.prototype.$axios = axios;
+Vue.prototype.$qs = qs;
 axios.defaults.baseURL = 'http://localhost:8080/outdoors';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

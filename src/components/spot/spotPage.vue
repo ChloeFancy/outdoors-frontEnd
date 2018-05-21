@@ -36,7 +36,6 @@
     },
     methods:{
       getData(){
-
         this.$axios.get('/spot/findById',{
           params:{
             id:this.currentSpotId

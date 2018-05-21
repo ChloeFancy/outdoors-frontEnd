@@ -45,7 +45,9 @@
       }
     },
     mounted(){
-      this.username = sessionStorage.getItem('username');
+      let {username} = sessionStorage;
+      this.logedin = !(typeof username === 'undefined');
+      this.username = username;
     }
   }
 </script>

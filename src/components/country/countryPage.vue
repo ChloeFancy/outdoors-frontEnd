@@ -17,6 +17,8 @@
 </template>
 
 <script>
+  import httpUtil from "../../myHttp/httpUtil";
+
   export default {
     name: "countryPage",
     props:{
@@ -37,18 +39,18 @@
             id:this.currentCountryId
           }
         }).then((response)=>{
-          this.currentCountry = response.data;
+          this.currentCountry = response.data.data;
         }).catch(e=>{
           console.log(e);
         });
 
-        this.$axios.get('/spot',{
+        this.$axios.get('/spot/findByQuery',{
           params:{
-            idCountry:this.currentCountry['id']
+            idCountry:this.currentCountryId
           }
         }).then((response)=>{
           //返回所有景点（属于某国家的）的信息
-          this.spotInfo = response.data;
+          this.spotInfo = httpUtil.parseJSONArray(response.data.data);
         });
       }
     },

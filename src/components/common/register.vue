@@ -83,8 +83,8 @@
         }
         user[this.registerType]=this[this.registerType];
 
-        this.$axios.post("/user/add",{
-          data:user
+        this.$axios.post("/user/add",this.$qs.stringify(user),{
+          headers: { 'content-type': 'application/x-www-form-urlencoded' },
         }).then((response)=>{
           this.registered = true;
           if(response.data.resCode==='1'){

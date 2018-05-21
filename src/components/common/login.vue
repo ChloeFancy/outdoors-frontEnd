@@ -53,8 +53,8 @@
           return;
         }
 
-        this.$axios.get("/user/login",{
-          params:userinfo,
+        this.$axios.post("/user/login",this.$qs.stringify(userinfo),{
+          headers: { 'content-type': 'application/x-www-form-urlencoded' },
         }).then((response)=>{
           this.loged = true;
           var resCode = response.data.resCode;

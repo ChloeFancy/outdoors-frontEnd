@@ -1,8 +1,8 @@
 <template>
     <div>
-      <h1>{{continentName}}</h1>
+      <h1>{{currentContinent['name']}}</h1>
 
-      <div v-for="c in continentInfo">
+      <div v-for="c in countryInfo">
         <router-link
           :to="{name:'country',params:{currentCountryId:c.id}}"
         >
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+  import httpUtil from "../../myHttp/httpUtil";
+
   export default {
     name: "continentPage",
     props:{
@@ -35,23 +37,24 @@
     },
     methods:{
       getData(){
-        var getContinentInfo = this.$axios.get('/continent/findById',{
+        console.log(this.currentContinentId);
+        this.$axios.get('/continent/findById',{
           params:{
             id:this.currentContinentId
           }
         }).then((response)=>{
-          this.currentContinent = response.data;
+          this.currentContinent = response.data.data;
         }).catch(e=>{
           console.log(e);
         });
 
-        var getCoutryList = this.$axios.get('/country/findByQuery',{
+        this.$axios.get('/country/findByQuery',{
           params:{
-            idContinent: this.currentContinent['id']
+            idContinent: this.currentContinentId
           }
         }).then((response)=>{
           //返回所有景点（属于某国家的）的信息
-          this.countryInfo = response.data;
+          this.countryInfo = httpUtil.parseJSONArray(response.data.data);
         }).catch(e=>{
           console.log(e);
         });
