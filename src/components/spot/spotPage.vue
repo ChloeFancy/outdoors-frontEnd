@@ -7,7 +7,7 @@
 
     <div>
       <div v-for="a in strategyArticles">
-        <router-link :to="{name:'article',params:{currentStrategyId:a.id}}">
+        <router-link :to="{name:'article',query:{id:a.id}}">
           <h5>
             {{a.title}}
           </h5>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+  import httpUtil from "../../myHttp/httpUtil";
+
   export default {
     name: "spotPage",
     props:{
@@ -38,22 +40,25 @@
       getData(){
         this.$axios.get('/spot/findById',{
           params:{
-            id:this.currentSpotId
+            id:this.$route.query['currentSpotId']
           }
         }).then((response)=>{
-          this.currentSpot = response.data;
+          this.currentSpot = response.data.data;
         }).catch(e=>{
           console.log(e);
         });
 
-        this.$axios.get("/strategy",{
+        this.$axios.get("/strategy/findByQuery",{
           params:{
-            idSpot:this.currentSpot.id,
+            idSpot:this.$route.query['currentSpotId']
           }
-        }).then(response=>{
-          this.strategyArticles = response.data;
+        }).then(({data:{data}})=>{
+          this.strategyArticles = httpUtil.parseJSONArray(data);
         })
       }
+    },
+    mounted(){
+      this.getData();
     }
   }
 </script>

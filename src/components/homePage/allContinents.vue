@@ -5,7 +5,7 @@
         class="jumbotron mb-0" >
            <!--style="background: url(images/europe/paris/3.jpg); border-radius:0"-->
         <!--<img :src="c.photoPath">-->
-        <router-link :to="{name:'continent',params:{currentContinentId:c.id}}">
+        <router-link :to="{name:'continent',params:{currentContinentId:c.id},query:{currentContinentId:c.id}}">
           <h1 class="text-white">{{c.name}}</h1>
           <p class="text-white text-justify">
             {{c.description}}

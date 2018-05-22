@@ -4,7 +4,7 @@
 
       <div v-for="c in countryInfo">
         <router-link
-          :to="{name:'country',params:{currentCountryId:c.id}}"
+          :to="{name:'country',query:{currentCountryId:c.id}}"
         >
           <div>
             <h3>
@@ -52,9 +52,9 @@
           params:{
             idContinent: this.currentContinentId
           }
-        }).then((response)=>{
+        }).then(({data:{data}})=>{
           //返回所有景点（属于某国家的）的信息
-          this.countryInfo = httpUtil.parseJSONArray(response.data.data);
+          this.countryInfo = httpUtil.parseJSONArray(data);
         }).catch(e=>{
           console.log(e);
         });

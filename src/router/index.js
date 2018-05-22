@@ -6,6 +6,7 @@ import register from '@/components/common/register'
 import countryPage from "@/components/country/countryPage"
 import continentPage from "@/components/continent/continentPage"
 import spotPage from "@/components/spot/spotPage"
+import articlePage from "@/components/article/articlePage"
 
 Vue.use(Router);
 
@@ -45,6 +46,12 @@ export default new Router({
       path: '/spotPage',
       name: 'spot',
       component: spotPage,
+      props: true,
+    },
+    {
+      path: '/articlePage',
+      name: 'article',
+      component: articlePage,
       props: true,
     }
   ]

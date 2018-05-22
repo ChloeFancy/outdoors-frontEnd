@@ -39,12 +39,16 @@ export default {
   //   return this.getData(instance,url);
   // },
   parseJSONArray(array){
-    return array.map((cur)=>{
-      let c = {};
-      for(var key in cur){
-        c[key] = cur[key];
-      }
-      return c;
+    return array.map((item)=>{
+      return Object.keys(item).reduce((pre,cur)=>{
+        pre[cur] = item[cur];
+        return pre;
+      },{});
+      // let c = {};
+      // for(var key in cur){
+      //   c[key] = cur[key];
+      // }
+      // return c;
     });
   }
 }
