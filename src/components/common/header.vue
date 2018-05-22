@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="myheader">
       <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark py-3">
           <a class="navbar-brand" href="#"><h2>Outdoors</h2></a>
@@ -21,7 +21,13 @@
 
           <div class="col-6" v-else>
             欢迎，{{username}}!
-            <a class="btn btn-sm btn-primary" @click="login">个人中心</a>
+
+            <!--跳转过后检查cookie中的token，获取用户信息后加载个人主页-->
+            <a class="btn btn-sm btn-primary" >
+              <router-link :to="{name:'personalCenter'}">个人中心</router-link>
+            </a>
+
+            <a class="btn btn-sm btn-primary" @click="logout">退出登录</a>
           </div>
         </nav>
       </header>
@@ -42,18 +48,43 @@
       },
       userRegister(){
         this.$router.push('/register');
+      },
+      logout(){
+        this.$axios.get('/user/logout').then(response=>{
+           //退出登陆之后，删除cookie中的token
+           sessionStorage.removeItem('username');
+           document.cookie ='usertoken=;expires='+new Date().toUTCString();
+           this.$router.push('/homepage');
+        });
+      },
+      getUserStatus(){
+        //判断用户是否登录，从而显示登录按钮/个人中心
+        let {username} = sessionStorage;
+        this.logedin = !(typeof username === 'undefined');
+        this.username = username;
       }
     },
     mounted(){
-      let {username} = sessionStorage;
-      this.logedin = !(typeof username === 'undefined');
-      this.username = username;
+      this.getUserStatus();
+    },
+    updated(){
+      this.getUserStatus();
     }
   }
 </script>
 
-<style scoped>
-  header{
-    color:#fff;
+
+<style scoped lang="less">
+  body{
+    padding: 200px 0;
   }
+  div#myheader{
+    /*position: fixed;*/
+    top:0;
+    width:100%;
+    header{
+      color:#fff;
+    }
+  }
+
 </style>

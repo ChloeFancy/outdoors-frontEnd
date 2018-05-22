@@ -7,6 +7,7 @@ import countryPage from "@/components/country/countryPage"
 import continentPage from "@/components/continent/continentPage"
 import spotPage from "@/components/spot/spotPage"
 import articlePage from "@/components/article/articlePage"
+import personalPage from "@/components/personalCenter/personalPage"
 
 Vue.use(Router);
 
@@ -53,6 +54,11 @@ export default new Router({
       name: 'article',
       component: articlePage,
       props: true,
+    },
+    {
+      path: '/personalCenter',
+      name: 'personalCenter',
+      component: personalPage
     }
   ]
 })

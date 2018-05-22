@@ -22,7 +22,7 @@
           登录成功,{{redirectCountDown}}秒后跳转到首页
         </div>
         <div v-if="!loginSuccess" class="alert alert-danger" role="alert">
-          登录失败，请重新输入
+          登录失败，请重新登录
         </div>
       </div>
 
@@ -50,6 +50,7 @@
           userinfo['mail']=this.mailTel;
         }else{
           //输入不正确
+          alert('请检查邮箱或手机号格式');
           return;
         }
 
@@ -61,11 +62,18 @@
           if(resCode==='1'){
             //登录成功
             this.loginSuccess = true;
-            var that = this;
+            let that = this;
+            //设置cookie中的token
+            let token = response.data.data['token'];
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 3 * 60 * 60 * 1000);//3小时过期
+            document.cookie ='usertoken='+token+ ";expires=" + exp.toGMTString() +";path=/";
+            //设置sessionStorage，存一下用户名
             sessionStorage.setItem('username',this.mailTel);
+            //跳转到主页
             setTimeout(function timeout(){
               that.redirectCountDown--;
-              console.log(that.redirectCountDown)
+              console.log(that.redirectCountDown);
               var t = setTimeout(timeout,1000);
               if(that.redirectCountDown<0){
                 clearTimeout(t);

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <footer class="text-muted bg-dark p-5">
+      <footer class="text-muted bg-dark p-4">
         <div class="container">
           <a href="#" class="btn btn-sm btn-primary float-right">回到顶部</a>
         </div>
@@ -18,5 +18,9 @@
 </script>
 
 <style scoped>
-
+  div{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 </style>
