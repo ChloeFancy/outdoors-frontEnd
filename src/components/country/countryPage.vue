@@ -3,7 +3,7 @@
       {{currentCountry.countryName}}
 
       <div v-for="s in spotInfo">
-        <router-link :to="{name:'spot',params:{currentSpotId:s.id},query:{currentSpotId:s.id}}">
+        <router-link :to="{name:'spot',params:{spot:s},query:{currentSpotId:s.id}}">
           <div>
             <h3>{{s.name}}</h3>
             <div>
@@ -36,7 +36,7 @@
       getData(){
         this.$axios.get('/country/findById',{
           params:{
-            id:this.currentCountryId
+            id:this.$route.query['currentCountryId']
           }
         }).then((response)=>{
           this.currentCountry = response.data.data;
@@ -46,7 +46,7 @@
 
         this.$axios.get('/spot/findByQuery',{
           params:{
-            idCountry:this.currentCountryId
+            idCountry:this.$route.query['currentCountryId']
           }
         }).then(({data:{data}})=>{
           //返回所有景点（属于某国家的）的信息

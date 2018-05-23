@@ -64,12 +64,14 @@
             this.loginSuccess = true;
             let that = this;
             //设置cookie中的token
-            let token = response.data.data['token'];
+            let {token,userId} = response.data.data;
+            // let token = response.data.data['token'];
             var exp = new Date();
             exp.setTime(exp.getTime() + 3 * 60 * 60 * 1000);//3小时过期
             document.cookie ='usertoken='+token+ ";expires=" + exp.toGMTString() +";path=/";
             //设置sessionStorage，存一下用户名
             sessionStorage.setItem('username',this.mailTel);
+            sessionStorage.setItem('userId',userId);
             //跳转到主页
             setTimeout(function timeout(){
               that.redirectCountDown--;

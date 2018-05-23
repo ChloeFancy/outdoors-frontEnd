@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="continentPage">
       <h1>{{currentContinent['name']}}</h1>
 
       <div v-for="c in countryInfo">
@@ -67,5 +67,8 @@
 </script>
 
 <style scoped>
-
+  #continentPage{
+    width: 60%;
+    margin: 0 auto;
+  }
 </style>

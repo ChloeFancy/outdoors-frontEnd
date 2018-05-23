@@ -21,7 +21,7 @@
       getData(){
         this.$axios.get("/follow/findFollower",{
           params:{
-            idFollowed:10003//获取用户名啊！！！
+            idFollowed:sessionStorage['userId']//获取用户名啊！！！
           }
         }).then(({data:{data:fans}})=>{
           this.allFans = httpUtil.parseJSONArray(fans);

@@ -10,7 +10,11 @@
 
       以下是评论区：
       <div v-for="c in comments">
-        <h5>{{c.idWriter}}</h5>
+        <h5>
+          <router-link :to="{name:'personalPage',query:{userId:c.id},params:{user:c}}">
+            {{c.name}}
+          </router-link>
+        </h5>
         <div>
           {{c.content}}
         </div>
@@ -23,28 +27,21 @@
 
   export default {
     name: "article",
+    props:{
+      currentArticle:{
+        type: Object
+      }
+    },
     data(){
       return{
-        currentArticleId:'',
-        currentArticle:{},
         comments:[],
       }
     },
     methods:{
       getData(){
-        this.currentArticleId = this.$route.query['id'];
-        alert(this.currentArticleId)
-        this.$axios.get("strategy/findById",{
+        this.$axios.get('comment/findByStrategy',{
           params:{
-            id:this.currentArticleId
-          }
-        }).then(({data:{data:article}})=>{
-          this.currentArticle = article;
-        });
-
-        this.$axios.get('comment/findByQuery',{
-          params:{
-            idStrategy:this.currentArticleId
+            idStrategy:this.$route.query['id']
           }
         }).then(({data:{data:comments}})=>{
           this.comments = httpUtil.parseJSONArray(comments);

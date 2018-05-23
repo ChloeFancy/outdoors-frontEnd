@@ -21,7 +21,7 @@
       getData(){
         this.$axios.get("/follow/findFollowed",{
           params:{
-            idFollower:10003
+            idFollower:sessionStorage['userId']
           }
         }).then(({data:{data:myFollow}})=>{
           this.myFollow = httpUtil.parseJSONArray(myFollow);

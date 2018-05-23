@@ -5,13 +5,25 @@
           <a class="navbar-brand" href="#"><h2>Outdoors</h2></a>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">主页</a>
+              <a class="nav-link" href="#">
+                <router-link :to="{name:'homepage'}">
+                  主页
+                </router-link>
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="continent.html">探索</a>
+              <a class="nav-link">
+                <router-link :to="{name:'search'}">
+                  探索
+                </router-link>
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">联系我们</a>
+              <a class="nav-link">
+                <router-link :to="{name:'contactUs'}">
+                  联系我们
+                </router-link>
+              </a>
             </li>
           </ul>
           <div class="col-6" v-if="!logedin">
@@ -53,7 +65,8 @@
         this.$axios.get('/user/logout').then(response=>{
            //退出登陆之后，删除cookie中的token
            sessionStorage.removeItem('username');
-           document.cookie ='usertoken=;expires='+new Date().toUTCString();
+          sessionStorage.removeItem('userId');
+          document.cookie ='usertoken=;expires='+new Date().toUTCString();
            this.$router.push('/homepage');
         });
       },

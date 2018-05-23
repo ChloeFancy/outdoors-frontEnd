@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <h2>{{currentSpot.name}}</h2>
-      <p>{{currentSpot.introduction}}</p>
+      <h2>{{spot.name}}</h2>
+      <p>{{spot.introduction}}</p>
     </div>
 
     <div>
       <div v-for="a in strategyArticles">
-        <router-link :to="{name:'article',query:{id:a.id}}">
+        <router-link :to="{name:'article',params:{currentArticle:a},query:{id:a.id}}">
           <h5>
             {{a.title}}
           </h5>
@@ -26,8 +26,8 @@
   export default {
     name: "spotPage",
     props:{
-      currentSpotId:{
-        type:String
+      spot:{
+        type: Object
       }
     },
     data(){

@@ -8,6 +8,8 @@ import continentPage from "@/components/continent/continentPage"
 import spotPage from "@/components/spot/spotPage"
 import articlePage from "@/components/article/articlePage"
 import personalPage from "@/components/personalCenter/personalPage"
+import searchPage from "@/components/searchPage/searchPage"
+import contactUs from "@/components/contactUs/contactUs"
 
 Vue.use(Router);
 
@@ -59,6 +61,16 @@ export default new Router({
       path: '/personalCenter',
       name: 'personalCenter',
       component: personalPage
+    },
+    {
+      path: '/searchPage',
+      name: 'search',
+      component: searchPage
+    },
+    {
+      path: '/contactUs',
+      name: 'contactUs',
+      component: contactUs
     }
   ]
 })
