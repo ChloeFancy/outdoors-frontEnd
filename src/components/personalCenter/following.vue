@@ -1,30 +1,38 @@
 <template>
   <div>
-    <router-link v-for="(fo,index) in myFollow" :key="index" :to="{name:'personalPage'}">
-      <p>
-        <h6>{{fo.name}}</h6>
-      </p>
-    </router-link>
+    <div class="empty" v-if="myFollow.length===0">
+      该用户暂时没有关注别人
+    </div>
+    <user-info-card v-for="(fo,index) in myFollow" :key="index" :user="fo">
+
+    </user-info-card>
   </div>
 </template>
 
 <script>
   import httpUtil from "../../myHttp/httpUtil";
+  import userInfoCard from "../searchPage/userInfoCard";
   export default {
     name: "following",
-    data(){
-      return{
-        myFollow:[]
-      }
+    components:{
+      userInfoCard
     },
+    // data(){
+    //   return{
+    //     myFollow:[]
+    //   }
+    // },
+    props:['userId','myFollow'],
     methods:{
       getData(){
         this.$axios.get("/follow/findFollowed",{
           params:{
-            idFollower:sessionStorage['userId']
+            idFollower:this.$route.query['userId'],
           }
         }).then(({data:{data:myFollow}})=>{
           this.myFollow = httpUtil.parseJSONArray(myFollow);
+          // this.$emit('loaded');
+          console.log(this.myFollow)
         })
       }
     },

@@ -1,16 +1,21 @@
 <template>
-    <div>
-        <div class="userInfoBox">
-          <!--<img :src="user.photoPath"/>-->
-          <h6>{{user.name}}</h6>
-          <button v-if="user.canBeFollowed===true" class="btn btn-primary" @click.prevent="follow">
-            关注
-          </button>
+    <div class="userCard">
+      <div class="userPhoto">
+        <router-link :to="{name:'personalPage',query:{userId:user.id}}">
+          <img :src="'../../../static/images/'+user.photoPath"/>
+          <span>{{user.name}}</span>
+        </router-link>
+      </div>
 
-          <button v-else class="btn btn-default" @click.prevent="unfollow">
-            取关
-          </button>
-        </div>
+      <div class="follow">
+        <button v-if="user.canBeFollowed===true" class="btn btn-primary" @click.prevent="follow">
+          关注
+        </button>
+
+        <button v-else class="btn btn-default" @click.prevent="unfollow">
+          取关
+        </button>
+      </div>
     </div>
 </template>
 
@@ -72,13 +77,31 @@
 </script>
 
 <style scoped lang="less">
+  div.userCard{
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    overflow: hidden;
+    border: 1px solid gray;
+  }
+  div.userPhoto{
+    float: left;
+  }
   div.userInfoBox{
-    border: 1px solid #eee;
+    overflow: hidden;
     padding: 10px;
     margin: 10px 0;
     text-align: left;
-    /*button{*/
-      /*float: right;*/
-    /*}*/
+  }
+  div.follow{
+    float: right;
+  }
+  img{
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
   }
 </style>

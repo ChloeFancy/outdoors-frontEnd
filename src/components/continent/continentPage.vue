@@ -1,29 +1,27 @@
 <template>
     <div id="continentPage">
-      <h1>{{currentContinent['name']}}</h1>
-
-      <div v-for="c in countryInfo">
-        <router-link
-          :to="{name:'country',query:{currentCountryId:c.id}}"
-        >
-          <div>
-            <h3>
-              {{c.name}}
-            </h3>
-            <div>
-              {{c.description}}
-            </div>
-          </div>
-        </router-link>
+      <div>
+        <h1>{{currentContinent['name']}}</h1>
+        <img :src="'../../../static/images/'+currentContinent.photoPath">
+        <div>
+          {{currentContinent.description}}
+        </div>
       </div>
+
+      <country-card v-for="(c,index) in countryInfo" :key="index" :country="c">
+
+      </country-card>
     </div>
 </template>
 
 <script>
   import httpUtil from "../../myHttp/httpUtil";
-
+  import countryCard from "./countryCard";
   export default {
     name: "continentPage",
+    components:{
+      countryCard
+    },
     props:{
       currentContinentId:{
         type:String
@@ -40,7 +38,7 @@
         console.log(this.currentContinentId);
         this.$axios.get('/continent/findById',{
           params:{
-            id:this.currentContinentId
+            id:this.$route.query['currentContinentId']
           }
         }).then((response)=>{
           this.currentContinent = response.data.data;
@@ -50,7 +48,7 @@
 
         this.$axios.get('/country/findByQuery',{
           params:{
-            idContinent: this.currentContinentId
+            idContinent: this.$route.query['currentContinentId']
           }
         }).then(({data:{data}})=>{
           //返回所有景点（属于某国家的）的信息
@@ -66,9 +64,18 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   #continentPage{
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
+    & img{
+      width: 90%;
+      margin: 10px 0;
+    }
+    & img+div{
+      text-align: left;
+      text-indent: 2em;
+    }
   }
+
 </style>

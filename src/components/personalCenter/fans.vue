@@ -1,33 +1,33 @@
 <template>
     <div>
-      <router-link v-for="(fan,index) in allFans" :key="index" :to="{name:'personalPage'}">
-        <div>
-          <h6>{{fan.name}}</h6>
-        </div>
-      </router-link>
+      <div class="empty" v-if="allFans.length===0">
+        该用户暂时没有发表粉丝
+      </div>
+      <user-info-card v-for="(fan,index) in allFans" :key="index" :user="fan">
+
+      </user-info-card>
     </div>
 </template>
 
 <script>
   import httpUtil from "../../myHttp/httpUtil";
+  import userInfoCard from "../searchPage/userInfoCard";
   export default {
     name: "fans",
-    data(){
-      return{
-        allFans:[],
-      }
+    props:['userId','allFans'],
+    components:{
+      userInfoCard
     },
     methods:{
       getData(){
         this.$axios.get("/follow/findFollower",{
           params:{
-            idFollowed:sessionStorage['userId']//获取用户名啊！！！
+            idFollowed: this.$route.query['userId']
           }
         }).then(({data:{data:fans}})=>{
           this.allFans = httpUtil.parseJSONArray(fans);
-          console.log(this.allFans)
+          this.$emit('loaded');
         });
-
       }
     },
     mounted(){

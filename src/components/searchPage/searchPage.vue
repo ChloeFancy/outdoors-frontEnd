@@ -2,7 +2,7 @@
   <div id="search">
     <div>
       <ul @click="chooseSearch">
-        <li id="user" class="active">用户</li>
+        <li id="user">用户</li>
         <li id="spot">景点</li>
         <li id="strategy">攻略</li>
       </ul>
@@ -17,44 +17,50 @@
       </form>
     </div>
 
-    <div v-if="!showResult">
-      <div id="searchNull">
-        搜索结果为空
-      </div>
-    </div>
+    <router-view>
 
-    <div v-else>
-      <div v-if="searchObject==='user'">
-        <user-card v-for='(item,index) in userList' :key="index" :user="item">
-        </user-card>
-      </div>
+    </router-view>
 
-      <div v-if="searchObject==='spot'">
-        <spot-card v-for='(item,index) in spotList' :key="index" :spot="item">
-        </spot-card>
-      </div>
+    <!--<div v-if="!showResult">-->
+      <!--<div id="searchNull">-->
+        <!--<img src="../../../static/images/icon/search-14-64.png"/>-->
+        <!--搜索结果为空-->
+      <!--</div>-->
+    <!--</div>-->
 
-      <div v-if="searchObject==='strategy'">
-        <div v-for='item in strategyList'>
-          <h6>{{item['title']}}</h6>
-          <p>{{item['writerName']}}</p>
-          <div>{{item['content']}}</div>
-        </div>
-      </div>
-    </div>
+    <!--<div v-else>-->
+      <!--<div v-if="searchObject==='user'">-->
+        <!--<user-card v-for='(item,index) in userList' :key="index" :user="item">-->
+        <!--</user-card>-->
+      <!--</div>-->
 
+      <!--<div v-if="searchObject==='spot'">-->
+        <!--<spot-card v-for='(item,index) in spotList' :key="index" :spot="item">-->
+        <!--</spot-card>-->
+      <!--</div>-->
+
+      <!--<div v-if="searchObject==='strategy'">-->
+        <!--<strategy-card v-for='(item,index) in strategyList' :key="index" :strategy="item">-->
+
+        <!--</strategy-card>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<loading-icon v-if="loading" position="fixed"></loading-icon>-->
   </div>
 </template>
 
 <script>
-  import httpUtil from "../../myHttp/httpUtil";
   import userCard from "./userInfoCard";
   import spotCard from "./spotCard";
+  import loadingIcon from "../common/loadingIcon";
+  import strategyCard from "./strategyCard";
   export default {
     name: "searchPage",
     components:{
       userCard,
-      spotCard
+      spotCard,
+      strategyCard,
+      loadingIcon
     },
     data(){
       return{
@@ -63,8 +69,9 @@
         spotList:[],
         userList:[],
         strategyList:[],
-        curTag: document.querySelector('.active'),
+        curTag: null,
         showResult: true,
+        loading: false,
       }
     },
     methods:{
@@ -79,27 +86,37 @@
         }
       },
       search(){
+        this.$router.push({path:`/search/${this.searchObject}`
+          ,query:{searchKeyword:`${this.searchKeyword}`}});
+        // this.userList = [];
+        // this.spotList = [];
+        // this.strategyList = [];
+        // this.showResult = true;
+        // this.loading = true;
         //模糊搜索用户名
         //http://localhost:8080/outdoors/user/fuzzyQuery?keyword=fei
-        this.$axios.get(`/${this.searchObject}/fuzzyQuery`,{
-          params:{
-            keyword:this.searchKeyword,
-          },
-          withCredentials:true,
-        }).then(({data:{data:list,resCode}})=>{
-          this.showResult = resCode==='1';
-          this[`${this.searchObject}List`] = httpUtil.parseJSONArray(list);
-        });
+        // this.$axios.get(`/${this.searchObject}/fuzzyQuery`,{
+        //   params:{
+        //     keyword:this.searchKeyword,
+        //   },
+        //   withCredentials:true,
+        // }).then(({data:{data:list,resCode}})=>{
+        //   this.loading = false;
+        //   this.showResult = resCode==='1';
+        //   this[`${this.searchObject}List`] = httpUtil.parseJSONArray(list);
+        // });
       }
     }
   }
 </script>
 
 <style scoped lang="less">
+
   div#search{
-    width:60%;
+    width:80%;
     margin: 0 auto;
   }
+
   ul{
     overflow: hidden;
     list-style: none;
@@ -130,6 +147,8 @@
   }
 
   div#searchNull{
+    margin-top: 20px;
     padding: 30px;
   }
+
 </style>

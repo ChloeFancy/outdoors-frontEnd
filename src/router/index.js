@@ -7,9 +7,20 @@ import countryPage from "@/components/country/countryPage"
 import continentPage from "@/components/continent/continentPage"
 import spotPage from "@/components/spot/spotPage"
 import articlePage from "@/components/article/articlePage"
-import personalPage from "@/components/personalCenter/personalPage"
+import personalCenter from "@/components/personalCenter/personalCenter"
+import personalPage from "@/components/personalPage/personalPage"
 import searchPage from "@/components/searchPage/searchPage"
+import userSearch from "@/components/searchPage/userSearch"
+import spotSearch from "@/components/searchPage/spotSearch"
+import strategySearch from "@/components/searchPage/strategySearch"
+
 import contactUs from "@/components/contactUs/contactUs"
+
+import fansList from "@/components/personalCenter/fans";
+import following from "@/components/personalCenter/following";
+import strategy from "@/components/personalCenter/strategy";
+import modifyPwd from "@/components/personalCenter/modifyPassword";
+
 
 Vue.use(Router);
 
@@ -60,12 +71,33 @@ export default new Router({
     {
       path: '/personalCenter',
       name: 'personalCenter',
-      component: personalPage
+      component: personalCenter,
+      children:[
+        { name:'fan', path: '/personalCenter/fan', component: fansList },
+        { name:'follow', path: '/personalCenter/follow', component: following },
+        { name:'strategy', path: '/personalCenter/strategy', component: strategy },
+        { name: 'modifyPwd', path: '/personalCenter/modifyPwd', component: modifyPwd },
+      ]
+    },
+    {
+      path: '/personalPage',
+      name: 'personalPage',
+      component: personalPage,
+      children:[
+        { name:'fan', path: '/personalPage/fan', component: fansList },
+        { name:'follow', path: '/personalPage/follow', component: following },
+        { name:'strategy', path: '/personalPage/strategy', component: strategy }
+      ]
     },
     {
       path: '/searchPage',
       name: 'search',
-      component: searchPage
+      component: searchPage,
+      children:[
+        { path: '/search/user', component: userSearch },
+        { path: '/search/spot', component: spotSearch },
+        { path: '/search/strategy', component: strategySearch }
+      ]
     },
     {
       path: '/contactUs',

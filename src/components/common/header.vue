@@ -97,7 +97,11 @@
     width:100%;
     header{
       color:#fff;
+      a{
+        color: #fff;
+      }
     }
+
   }
 
 </style>

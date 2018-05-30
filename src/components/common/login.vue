@@ -6,7 +6,7 @@
         <input v-model="mailTel"
           type="email" id="inputEmail" class="form-control" placeholder="邮箱/手机号" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
-        <input v-model="password"
+        <input v-model="password" @keyup.enter="login"
           type="password" id="inputPassword" class="form-control" placeholder="密码" required>
         <div class="checkbox mb-3">
           <label>
@@ -14,7 +14,7 @@
           </label>
         </div>
         <a class="btn btn-lg btn-primary btn-block" @click="login">登陆</a>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
       </form>
 
       <div v-if="loged">

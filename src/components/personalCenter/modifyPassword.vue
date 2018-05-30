@@ -1,19 +1,19 @@
 <template>
   <div>
     <form>
-      <div>
-        <label for="oldPwd">旧的密码</label>
-        <input v-model="oldPwd" type="password" id="oldPwd"/>
+      <div class="form-group">
+        <label for="oldPwd" class="control-label">旧的密码</label>
+        <input v-model="oldPwd" class="form-control" type="password" id="oldPwd"/>
       </div>
-      <div>
-        <label for="newPwd">新的密码</label>
-        <input v-model="newPwd" type="password" id="newPwd"/>
+      <div class="form-group">
+        <label for="newPwd" class="control-label">新的密码</label>
+        <input v-model="newPwd" class="form-control" type="password" id="newPwd"/>
       </div>
-      <div>
-        <label for="newPwd_1">重复新的密码</label>
-        <input v-model="newPwd1" type="password" id="newPwd_1"/>
+      <div class="form-group">
+        <label for="newPwd_1" class="control-label">重复新的密码</label>
+        <input v-model="newPwd1" class="form-control" type="password" id="newPwd_1"/>
       </div>
-      <button @click="updatePwd">修改密码</button>
+      <button @click="updatePwd" class="btn btn-default">修改密码</button>
     </form>
   </div>
 </template>
@@ -51,6 +51,9 @@
           }
         });
       }
+    },
+    mounted(){
+      this.$emit('loaded');
     }
   }
 </script>
@@ -61,9 +64,13 @@
     position: absolute;
     left:50%;
     transform: translateX(-50%);
+    text-align: left;
     label{
-      width:20%;
-      text-align: right;
+      width:30%;
+      text-align: left;
+    }
+    & button{
+      float: right;
     }
   }
 </style>

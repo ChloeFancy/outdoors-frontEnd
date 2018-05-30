@@ -8,21 +8,30 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <a href="#"><img class="d-block w-100" src="../../../static/images/carousel_images/london.jpg"></a>
+          <router-link :to="{name:'search'}">
+            <img class="d-block w-100"
+                 src="../../../static/images/carousel_images/london.jpg">
+          </router-link>
           <div class="carousel-caption d-none d-md-block">
             <h5>Outdoors</h5>
             <p>旅游攻略？你想要的这儿都有！</p>
           </div>
         </div>
+
         <div class="carousel-item">
-          <a href="dubai.html"><img class="d-block w-100" src="../../../static/images/carousel_images/dubai.jpg"></a>
+          <router-link :to="{name:'spot',query:{currentSpotId:10007}}">
+            <img class="d-block w-100" src="../../../static/images/carousel_images/dubai.jpg">
+          </router-link>
           <div class="carousel-caption d-none d-md-block">
             <h5>迪拜</h5>
             <p>想来中东体验富豪生活吗？</p>
           </div>
         </div>
+
         <div class="carousel-item">
-          <a href="#"><img class="d-block w-100" src="../../../static/images/carousel_images/sydney.jpg"></a>
+          <router-link :to="{name:'spot',query:{currentSpotId:10017}}">
+            <img class="d-block w-100" src="../../../static/images/carousel_images/sydney.jpg">
+          </router-link>
           <div class="carousel-caption d-none d-md-block">
             <h5>悉尼</h5>
             <p>听一场宏大的歌剧。</p>

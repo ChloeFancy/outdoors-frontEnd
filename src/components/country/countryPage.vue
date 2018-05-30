@@ -1,30 +1,29 @@
 <template>
     <div>
-      {{currentCountry.countryName}}
-
-      <div v-for="s in spotInfo">
-        <router-link :to="{name:'spot',params:{spot:s},query:{currentSpotId:s.id}}">
-          <div>
-            <h3>{{s.name}}</h3>
-            <div>
-              {{s.shortInfo}}
-            </div>
-          </div>
-        </router-link>
+      <div>
+        <h1>
+          {{currentCountry.name}}
+        </h1>
+        <img :src="'../../../static/images/'+currentCountry.photoPath">
+        <div>
+          {{currentCountry.description}}
+        </div>
       </div>
+
+      <spot-card v-for="(s,index) in spotInfo" :key="index" :spot="s">
+
+      </spot-card>
 
     </div>
 </template>
 
 <script>
   import httpUtil from "../../myHttp/httpUtil";
-
+  import spotCard from "./spotCard";
   export default {
     name: "countryPage",
-    props:{
-      currentCountryId:{
-        type:Number
-      }
+    components:{
+      spotCard
     },
     data(){
       return{
@@ -38,8 +37,8 @@
           params:{
             id:this.$route.query['currentCountryId']
           }
-        }).then((response)=>{
-          this.currentCountry = response.data.data;
+        }).then(({data:{data:country}})=>{
+          this.currentCountry = country;
         }).catch(e=>{
           console.log(e);
         });
@@ -60,6 +59,14 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
+  h1+img{
+    width: 90%;
+    margin: 10px 0;
+  &+div{
+     text-align: left;
+     text-indent: 2em;
+   }
+  }
 </style>

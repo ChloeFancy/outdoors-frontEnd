@@ -19,7 +19,7 @@
 
 <style scoped>
   div{
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     width: 100%;
   }
