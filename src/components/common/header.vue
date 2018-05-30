@@ -32,8 +32,7 @@
           </div>
 
           <div class="col-6" v-else>
-            欢迎，{{username}}!
-
+            欢迎，{{username}}！
             <!--跳转过后检查cookie中的token，获取用户信息后加载个人主页-->
             <a class="btn btn-sm btn-primary" >
               <router-link :to="{name:'personalCenter'}">个人中心</router-link>
@@ -54,6 +53,11 @@
         type:Boolean,
       }
     },
+    data(){
+      return{
+        username: '',
+      }
+    },
     methods:{
       login(){
         this.$router.push('/login');
@@ -64,10 +68,12 @@
       logout(){
         this.$axios.get('/user/logout').then(response=>{
            //退出登陆之后，删除cookie中的token
-           sessionStorage.removeItem('username');
+          sessionStorage.removeItem('username');
           sessionStorage.removeItem('userId');
           document.cookie ='usertoken=;expires='+new Date().toUTCString();
-           this.$router.push('/homepage');
+          this.$router.push('/homepage');
+          alert('退出登录成功！');
+          this.logedin = false;
         });
       },
       getUserStatus(){

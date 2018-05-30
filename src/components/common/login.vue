@@ -19,7 +19,7 @@
 
       <div v-if="loged">
         <div v-if="loginSuccess" class="alert alert-success" role="alert">
-          登录成功,{{redirectCountDown}}秒后跳转到首页
+          登录成功,{{redirectCountDown}}秒后跳转到浏览的界面
         </div>
         <div v-if="!loginSuccess" class="alert alert-danger" role="alert">
           登录失败，请重新登录
@@ -56,21 +56,18 @@
 
         this.$axios.post("/user/login",this.$qs.stringify(userinfo),{
           headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        }).then((response)=>{
+        }).then(({data:{resCode,data:{token,userId,username}}})=>{
           this.loged = true;
-          var resCode = response.data.resCode;
           if(resCode==='1'){
             //登录成功
             this.loginSuccess = true;
             let that = this;
             //设置cookie中的token
-            let {token,userId} = response.data.data;
-            // let token = response.data.data['token'];
             var exp = new Date();
             exp.setTime(exp.getTime() + 3 * 60 * 60 * 1000);//3小时过期
             document.cookie ='usertoken='+token+ ";expires=" + exp.toGMTString() +";path=/";
             //设置sessionStorage，存一下用户名
-            sessionStorage.setItem('username',this.mailTel);
+            sessionStorage.setItem('username',username);
             sessionStorage.setItem('userId',userId);
             //跳转到主页
             setTimeout(function timeout(){
@@ -80,14 +77,16 @@
               if(that.redirectCountDown<0){
                 clearTimeout(t);
                 that.loginSuccess = false;
-                that.$router.push('/homepage');
+                that.$router.go(-1);
+                that.$emit("logedin",true);
               }
             },0);
           }else{
             //登录失败
             this.loginSuccess = false;
             this.mailTel=this.password='';
-          }}).catch(e=>{
+          }
+        }).catch(e=>{
 
         });
       }

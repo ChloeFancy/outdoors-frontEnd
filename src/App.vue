@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <my-header :logedin="false"></my-header>
+    <my-header :logedin="logedin"></my-header>
     <div id="window">
-      <router-view/>
+      <router-view @logedin="iflogin"/>
     </div>
     <my-footer></my-footer>
   </div>
@@ -13,9 +13,19 @@
   import myFooter from "./components/common/footer";
 export default {
   name: 'App',
+  data(){
+    return{
+      logedin: false,
+    }
+  },
   components:{
     myHeader,
     myFooter
+  },
+  methods:{
+    iflogin(){
+      this.logedin = true;
+    }
   }
 }
 </script>

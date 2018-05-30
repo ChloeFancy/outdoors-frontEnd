@@ -84,6 +84,8 @@
         }).then(({data:{resCode}})=>{
           if(resCode==='1'){
             alert('评论成功！');
+            this.getData();
+            this.commentContent='';
           }else{
             alert('评论失败，身份过期，请重新登录！');
             this.$router.push("/login");
