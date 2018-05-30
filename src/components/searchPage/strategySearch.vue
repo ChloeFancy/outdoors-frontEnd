@@ -29,9 +29,12 @@
           },
           withCredentials:true,
         }).then(({data:{data:list,resCode}})=>{
-          this.loading = false;
-          this.showResult = resCode==='1';
           this.strategyList = httpUtil.parseJSONArray(list);
+          if(list.length){
+            this.$emit("Null",false);
+          }else{
+            this.$emit("Null",true);
+          }
         });
       }
     },

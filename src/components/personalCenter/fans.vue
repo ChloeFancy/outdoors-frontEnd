@@ -23,7 +23,8 @@
         this.$axios.get("/follow/findFollower",{
           params:{
             idFollowed: this.$route.query['userId']
-          }
+          },
+          withCredentials: true,
         }).then(({data:{data:fans}})=>{
           this.allFans = httpUtil.parseJSONArray(fans);
           this.$emit('loaded');

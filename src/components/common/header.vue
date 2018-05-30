@@ -2,7 +2,7 @@
     <div id="myheader">
       <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark py-3">
-          <a class="navbar-brand" href="#"><h2>Outdoors</h2></a>
+          <a class="navbar-brand" href="/"><h2>Outdoors</h2></a>
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="#">
@@ -18,28 +18,31 @@
                 </router-link>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link">
-                <router-link :to="{name:'contactUs'}">
-                  联系我们
-                </router-link>
-              </a>
-            </li>
+            <!--<li class="nav-item">-->
+              <!--<a class="nav-link">-->
+                <!--<router-link :to="{name:'contactUs'}">-->
+                  <!--联系我们-->
+                <!--</router-link>-->
+              <!--</a>-->
+            <!--</li>-->
           </ul>
-          <div class="col-6" v-if="!logedin">
-            <a class="btn btn-sm btn-primary" @click="login">登陆</a>
-            <a class="btn btn-sm btn-warning" @click="userRegister">注册</a>
+          <div id="loginBar">
+            <div v-if="!logedin">
+              <a class="btn btn-sm btn-primary" @click="login">登陆</a>
+              <a class="btn btn-sm btn-warning" @click="userRegister">注册</a>
+            </div>
+
+            <div v-else>
+              欢迎，{{username}}！
+              <!--跳转过后检查cookie中的token，获取用户信息后加载个人主页-->
+              <a class="btn btn-sm btn-primary" >
+                <router-link :to="{name:'personalCenter'}">个人中心</router-link>
+              </a>
+
+              <a class="btn btn-sm btn-primary" @click="logout">退出登录</a>
+            </div>
           </div>
 
-          <div class="col-6" v-else>
-            欢迎，{{username}}！
-            <!--跳转过后检查cookie中的token，获取用户信息后加载个人主页-->
-            <a class="btn btn-sm btn-primary" >
-              <router-link :to="{name:'personalCenter'}">个人中心</router-link>
-            </a>
-
-            <a class="btn btn-sm btn-primary" @click="logout">退出登录</a>
-          </div>
         </nav>
       </header>
     </div>
@@ -105,6 +108,13 @@
       color:#fff;
       a{
         color: #fff;
+      }
+      nav{
+        width: 100%;
+        & #loginBar{
+          margin-left: auto;
+          margin-right: 30px;
+        }
       }
     }
 

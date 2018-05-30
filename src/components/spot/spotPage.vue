@@ -7,7 +7,13 @@
     </div>
 
     <div id="strategyArea">
+      <div id="nullHint" v-if="notNull">
+        该景点暂无攻略。
+        <img src="../../../static/images/icon/search-14-64.png"/>
+      </div>
+
       <strategy-card
+        v-else
         v-for="(a,index) in strategyArticles"
         :key="index"
         :strategy="a"
@@ -57,6 +63,11 @@
         strategyArticles:[],
       }
     },
+    computed:{
+      notNull(){
+        return !this.strategyArticles.length;
+      }
+    },
     methods:{
       getData(){
         this.$axios.get('/spot/findSpotAndStrategies',{
@@ -66,17 +77,10 @@
         }).then(({data:{data:{spot,strategies}}})=>{
           this.currentSpot = spot;
           this.strategyArticles = strategies;
+          this.addUserHistory();
         }).catch(e=>{
           console.log(e);
         });
-
-        // this.$axios.get("/strategy/findByQuery",{
-        //   params:{
-        //     idSpot:this.$route.query['currentSpotId']
-        //   }
-        // }).then(({data:{data}})=>{
-        //   this.strategyArticles = httpUtil.parseJSONArray(data);
-        // })
       },
       addUserHistory(){
         try{
@@ -84,10 +88,10 @@
             let [key,value] = entry.split('=');
             return key==='usertoken';
           })[0].split('=')[1];
-          this.$axios.post('/browse/updateRecord',this.$qs.stringify({idSpot:this.spot.id}),{
-            headers:{
-              'content-type': 'application/x-www-form-urlencoded'
-            },
+          let obj = {'idSpot':this.currentSpot.id};
+          console.log(obj);
+          this.$axios.post('/browse/updateRecord',this.$qs.stringify(obj),{
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
             withCredentials: true
           }).then(({data:{resCode}})=>{
             if(resCode==='1'){
@@ -112,6 +116,7 @@
         }).then(({data:{resCode}})=>{
           if(resCode==='1'){
             alert('发表成功！');
+            this.getData();
           }else{
             alert('发表失败，身份过期，请重新登录！');
             this.$router.push("/login");
@@ -121,7 +126,8 @@
     },
     mounted(){
       this.getData();
-      this.addUserHistory();
+      alert(this.notNull());
+      // this.addUserHistory(); getData中有ajax一步获取数据，要在resolved之后添加记录
     }
   }
 </script>
@@ -143,6 +149,10 @@
     padding-bottom: 10px;
     border-bottom: 1px solid grey;
     text-align: left;
+    &#nullHint{
+      padding: 40px;
+      text-align:center;
+    }
   }
   div#toStrategy{
     width: 80%;

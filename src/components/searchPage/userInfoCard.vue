@@ -8,21 +8,28 @@
       </div>
 
       <div class="follow">
-        <button v-if="user.canBeFollowed===true" class="btn btn-primary" @click.prevent="follow">
-          关注
-        </button>
+        <follow :user="user">
 
-        <button v-else class="btn btn-default" @click.prevent="unfollow">
-          取关
-        </button>
+        </follow>
+        <!--<button v-if="user.canBeFollowed===true" class="btn btn-primary" @click.prevent="follow">-->
+          <!--关注-->
+        <!--</button>-->
+
+        <!--<button v-else class="btn btn-default" @click.prevent="unfollow">-->
+          <!--取关-->
+        <!--</button>-->
       </div>
     </div>
 </template>
 
 <script>
+  import follow from "../common/followButton";
   export default {
     name: "userInfoCard",
     props:['user'],
+    components:{
+      follow
+    },
     methods:{
       follow(){
         this.user['canBeFollowed'] = false;

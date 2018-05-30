@@ -28,9 +28,12 @@
           },
           withCredentials:true,
         }).then(({data:{data:list,resCode}})=>{
-          this.loading = false;
-          this.showResult = resCode==='1';
           this.spotList = httpUtil.parseJSONArray(list);
+          if(list.length>0){
+            this.$emit("Null",false);
+          }else{
+            this.$emit("Null",true);
+          }
         });
       }
     },

@@ -3,14 +3,20 @@
       <div class="userPhoto">
         <img :src="'../../../static/images/'+user.photoPath"/>
         <div><h2>{{user.name}}</h2></div>
+        <follow :user="user"></follow>
       </div>
     </div>
 </template>
 
 <script>
+  import follow from "../common/followButton";
+
   export default {
     name: "ownerCard",
     props: ['user'],
+    components:{
+      follow
+    }
   }
 </script>
 

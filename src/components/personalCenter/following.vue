@@ -28,10 +28,10 @@
         this.$axios.get("/follow/findFollowed",{
           params:{
             idFollower:this.$route.query['userId'],
-          }
+          },
+          withCredentials: true,
         }).then(({data:{data:myFollow}})=>{
           this.myFollow = httpUtil.parseJSONArray(myFollow);
-          // this.$emit('loaded');
           console.log(this.myFollow)
         })
       }

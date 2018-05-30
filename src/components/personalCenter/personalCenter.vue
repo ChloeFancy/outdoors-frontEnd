@@ -46,9 +46,6 @@
     data(){
       return{
         user:{},
-        followers:[],
-        follows: [],
-        strategies: [],
       }
     },
     methods:{

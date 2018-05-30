@@ -17,15 +17,21 @@
       </form>
     </div>
 
-    <router-view>
+    <loading-icon v-if="loading" position="fixed"></loading-icon>
 
-    </router-view>
+    <div v-else>
+      <router-view @Null="showHint">
+
+      </router-view>
+
+      <div v-if="showNULLHint" id="searchNull">
+        <img src="../../../static/images/icon/search-14-64.png"/>
+        搜索结果为空
+      </div>
+    </div>
 
     <!--<div v-if="!showResult">-->
-      <!--<div id="searchNull">-->
-        <!--<img src="../../../static/images/icon/search-14-64.png"/>-->
-        <!--搜索结果为空-->
-      <!--</div>-->
+
     <!--</div>-->
 
     <!--<div v-else>-->
@@ -45,7 +51,6 @@
         <!--</strategy-card>-->
       <!--</div>-->
     <!--</div>-->
-    <!--<loading-icon v-if="loading" position="fixed"></loading-icon>-->
   </div>
 </template>
 
@@ -70,7 +75,7 @@
         userList:[],
         strategyList:[],
         curTag: null,
-        showResult: true,
+        showNULLHint: false,
         loading: false,
       }
     },
@@ -88,6 +93,10 @@
       search(){
         this.$router.push({path:`/search/${this.searchObject}`
           ,query:{searchKeyword:`${this.searchKeyword}`}});
+        this.loading = true;
+        setTimeout(()=>{
+          this.loading = false;
+        },1500);
         // this.userList = [];
         // this.spotList = [];
         // this.strategyList = [];
@@ -105,6 +114,9 @@
         //   this.showResult = resCode==='1';
         //   this[`${this.searchObject}List`] = httpUtil.parseJSONArray(list);
         // });
+      },
+      showHint(flag){
+        this.showNULLHint = flag;
       }
     }
   }

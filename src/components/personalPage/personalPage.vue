@@ -39,24 +39,25 @@
       return{
         userId: this.$route.query['userId'],
         user:{},
-        followers:[],
-        follows: [],
-        strategies: [],
+        lastChosenItem: null,
       }
     },
     methods:{
       getData(){
-        this.$axios.get('/user/findById',{
+        this.$axios.get('/user/findBrief',{
           params:{
             id: this.$route.query['userId']
           },
           withCredentials: true,
         }).then(({data:{data}})=>{
           this.user = data;
+          if(sessionStorage['userId']&&sessionStorage['userId']-data['id']===0){
+            this.$router.push({name:'personalCenter'});
+          }
         }).catch(e=>{
           console.log(e);
         })
-      }
+      },
     },
     mounted(){
       this.getData();
@@ -78,5 +79,9 @@
       background-color: #1b1e21;
       color: #fff;
     }
+  }
+  .focus-on{
+    background-color: #1b1e21;
+    color: #fff;
   }
 </style>
